@@ -1,41 +1,31 @@
 return {
 	"nvim-lualine/lualine.nvim",
-	dependencies = { "nvim-tree/nvim-web-devicons" },
+	dependencies = { "echasnovski/mini.icons" },
 	config = function()
-		local lualine = require("lualine")
-		local lazy_status = require("lazy.status") -- to configure lazy pending updates count
-		local function os_icon()
-			local icons = {
-				macos = "",
-				linux = "",
-				windows = "",
-			}
-
-			if vim.fn.has("mac") == 1 then
-				return icons.macos
-			elseif vim.fn.has("win32") == 1 or vim.fn.has("win64") == 1 then
-				return icons.windows
-			elseif vim.fn.has("unix") == 1 then
-				return icons.linux
-			else
-				return ""
-			end
-		end
-
-		lualine.setup({
+		require("lualine").setup({
 			options = {
-				disabled_filetypes = { "neo-tree" }, -- Disable lualine for nvim-tree
+				icons_enabled = false,
+				theme = "auto",
+				component_separators = "",
+				section_separators = "",
 			},
+
 			sections = {
+				lualine_a = { "mode" },
+				lualine_b = { "branch" },
+				lualine_c = { "filename" },
 				lualine_x = {
-					{
-						lazy_status.updates,
-						cond = lazy_status.has_updates,
-					},
-					{ "encoding" },
-					{ os_icon },
-					{ "filetype" },
+					function()
+						local encoding = vim.o.fileencoding
+						if encoding == "" then
+							return vim.bo.fileformat .. " :: " .. vim.bo.filetype
+						else
+							return encoding .. " :: " .. vim.bo.fileformat .. " :: " .. vim.bo.filetype
+						end
+					end,
 				},
+				lualine_y = { "progress" },
+				lualine_z = { "location" },
 			},
 		})
 	end,
