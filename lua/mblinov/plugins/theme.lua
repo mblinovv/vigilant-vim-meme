@@ -92,6 +92,32 @@ return {
 	},
 	{
 		"jnurmine/Zenburn",
+		config = function()
+			vim.g.zenbones_italic_comments = true -- only Comment remains italic
+
+			vim.cmd("colorscheme zenwritten")
+
+			vim.api.nvim_create_autocmd("ColorScheme", {
+				pattern = "zenwritten",
+				callback = function()
+					local no_italic = {
+						"Constant",
+						"SpecialKey",
+						"Conceal",
+						"Italic",
+						"Statement",
+						"Underlined",
+						"Todo",
+						"Type",
+						"Identifier",
+					}
+					for _, grp in ipairs(no_italic) do
+						-- remove all GUI and cterm styling
+						vim.cmd("highlight " .. grp .. " gui=NONE cterm=NONE")
+					end
+				end,
+			})
+		end,
 	},
 	{
 		"RRethy/base16-nvim",
@@ -114,7 +140,7 @@ return {
 				},
 			})
 
-			vim.cmd.colorscheme("mellifluous")
+			-- vim.cmd.colorscheme("mellifluous")
 		end,
 	},
 	{
