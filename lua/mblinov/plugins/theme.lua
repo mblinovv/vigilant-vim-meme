@@ -77,15 +77,15 @@ return {
 					builtin_variables = "none",
 				},
 				colors = {
-					-- func = "#bc96b0",
-					-- keyword = "#787bab",
-					-- -- string = "#d4bd98",
-					-- string = "#8a739a",
-					-- -- string = "#f2e6ff",
-					-- -- number = "#f2e6ff",
-					-- -- string = "#d8d5b1",
-					-- number = "#8f729e",
-					-- -- type = "#dcaed7",
+					func = "#bc96b0",
+					keyword = "#787bab",
+					-- string = "#d4bd98",
+					string = "#8a739a",
+					-- string = "#f2e6ff",
+					-- number = "#f2e6ff",
+					-- string = "#d8d5b1",
+					number = "#8f729e",
+					-- type = "#dcaed7",
 				},
 			})
 		end,
@@ -94,11 +94,11 @@ return {
 		"jnurmine/Zenburn",
 		config = function()
 			vim.g.zenbones_italic_comments = true -- only Comment remains italic
-
-			vim.cmd("colorscheme zenwritten")
+			vim.g.zenwritten = { transparent_background = true }
+			vim.g.zenbones = { transparent_background = true }
 
 			vim.api.nvim_create_autocmd("ColorScheme", {
-				pattern = "zenwritten",
+				pattern = "zenbones",
 				callback = function()
 					local no_italic = {
 						"Constant",
@@ -117,6 +117,7 @@ return {
 					end
 				end,
 			})
+			vim.cmd.colorscheme("zenbones")
 		end,
 	},
 	{
